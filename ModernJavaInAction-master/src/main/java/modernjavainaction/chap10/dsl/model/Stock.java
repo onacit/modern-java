@@ -18,28 +18,28 @@ package modernjavainaction.chap10.dsl.model;
 
 public class Stock {
 
-  private String symbol;
-  private String market;
+    private String symbol;
 
-  public String getSymbol() {
-    return symbol;
-  }
+    private String market;
 
-  public void setSymbol( String symbol ) {
-    this.symbol = symbol;
-  }
+    public String getSymbol() {
+        return symbol;
+    }
 
-  public String getMarket() {
-    return market;
-  }
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
 
-  public void setMarket( String market ) {
-    this.market = market;
-  }
+    public String getMarket() {
+        return market;
+    }
 
-  @Override
-  public String toString() {
-    return String.format("Stock[symbol=%s, market=%s]", symbol, market);
-  }
+    public void setMarket(String market) {
+        this.market = market;
+    }
 
+    @Override
+    public String toString() {
+        return String.format("Stock[symbol=%s, market=%s]", symbol, market);
+    }
 }

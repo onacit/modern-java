@@ -1,12 +1,15 @@
 package modernjavainaction.appc;
 
-import static java.util.stream.Collectors.*;
+import modernjavainaction.chap06.Dish;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.reducing;
 import static modernjavainaction.chap06.Dish.menu;
-
-import java.util.*;
-import java.util.stream.*;
-
-import modernjavainaction.chap06.*;
 
 public class StreamForkerExample {
 
@@ -21,7 +24,7 @@ public class StreamForkerExample {
                 .fork("shortMenu", s -> s.map(Dish::getName).collect(joining(", ")))
                 .fork("totalCalories", s -> s.mapToInt(Dish::getCalories).sum())
                 .fork("mostCaloricDish", s -> s.collect(
-                        reducing((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2))
+                                reducing((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2))
                         .get())
                 .fork("dishesByType", s -> s.collect(groupingBy(Dish::getType)))
                 .getResults();

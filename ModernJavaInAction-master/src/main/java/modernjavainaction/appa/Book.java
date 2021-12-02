@@ -13,5 +13,4 @@ public class Book {
             System.out.println(a.name());
         });
     }
-
 }

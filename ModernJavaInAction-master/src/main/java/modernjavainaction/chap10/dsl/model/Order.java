@@ -22,29 +22,29 @@ import java.util.stream.Collectors;
 
 public class Order {
 
-  private String customer;
-  private List<Trade> trades = new ArrayList<>();
+    private String customer;
 
-  public void addTrade( Trade trade ) {
-    trades.add( trade );
-  }
+    private List<Trade> trades = new ArrayList<>();
 
-  public String getCustomer() {
-    return customer;
-  }
+    public void addTrade(Trade trade) {
+        trades.add(trade);
+    }
 
-  public void setCustomer( String customer ) {
-    this.customer = customer;
-  }
+    public String getCustomer() {
+        return customer;
+    }
 
-  public double getValue() {
-    return trades.stream().mapToDouble( Trade::getValue ).sum();
-  }
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
 
-  @Override
-  public String toString() {
-    String strTrades = trades.stream().map(t -> "  " + t).collect(Collectors.joining("\n", "[\n", "\n]"));
-    return String.format("Order[customer=%s, trades=%s]", customer, strTrades);
-  }
+    public double getValue() {
+        return trades.stream().mapToDouble(Trade::getValue).sum();
+    }
 
+    @Override
+    public String toString() {
+        String strTrades = trades.stream().map(t -> "  " + t).collect(Collectors.joining("\n", "[\n", "\n]"));
+        return String.format("Order[customer=%s, trades=%s]", customer, strTrades);
+    }
 }

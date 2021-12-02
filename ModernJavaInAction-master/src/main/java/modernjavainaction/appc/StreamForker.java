@@ -1,9 +1,18 @@
 package modernjavainaction.appc;
 
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Spliterator;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Adapted from http://mail.openjdk.java.net/pipermail/lambda-dev/2013-November/011516.html
@@ -11,6 +20,7 @@ import java.util.stream.*;
 public class StreamForker<T> {
 
     private final Stream<T> stream;
+
     private final Map<Object, Function<Stream<T>, ?>> forks = new HashMap<>();
 
     public StreamForker(Stream<T> stream) {
@@ -56,17 +66,22 @@ public class StreamForker<T> {
         queues.add(queue);
         Spliterator<T> spliterator = new BlockingQueueSpliterator<>(queue);
         Stream<T> source = StreamSupport.stream(spliterator, false);
-        return CompletableFuture.supplyAsync( () -> f.apply(source) );
+        return CompletableFuture.supplyAsync(() -> f.apply(source));
     }
 
     public static interface Results {
+
         public <R> R get(Object key);
     }
 
-    private static class ForkingStreamConsumer<T> implements Consumer<T>, Results {
+    private static class ForkingStreamConsumer<T>
+            implements Consumer<T>,
+                       Results {
+
         static final Object END_OF_STREAM = new Object();
 
         private final List<BlockingQueue<T>> queues;
+
         private final Map<Object, Future<?>> actions;
 
         ForkingStreamConsumer(List<BlockingQueue<T>> queues, Map<Object, Future<?>> actions) {
@@ -93,7 +108,9 @@ public class StreamForker<T> {
         }
     }
 
-    private static class BlockingQueueSpliterator<T> implements Spliterator<T> {
+    private static class BlockingQueueSpliterator<T>
+            implements Spliterator<T> {
+
         private final BlockingQueue<T> q;
 
         BlockingQueueSpliterator(BlockingQueue<T> q) {
@@ -107,8 +124,7 @@ public class StreamForker<T> {
                 try {
                     t = q.take();
                     break;
-                }
-                catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                 }
             }
 

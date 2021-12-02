@@ -1,33 +1,33 @@
 package modernjavainaction.chap16;
 
+import java.util.Random;
+
 import static modernjavainaction.chap16.Util.delay;
 import static modernjavainaction.chap16.Util.format;
 
-import java.util.Random;
-
 public class Shop {
 
-  private final String name;
-  private final Random random;
+    private final String name;
 
-  public Shop(String name) {
-    this.name = name;
-    random = new Random(name.charAt(0) * name.charAt(1) * name.charAt(2));
-  }
+    private final Random random;
 
-  public String getPrice(String product) {
-    double price = calculatePrice(product);
-    Discount.Code code = Discount.Code.values()[random.nextInt(Discount.Code.values().length)];
-    return name + ":" + price + ":" + code;
-  }
+    public Shop(String name) {
+        this.name = name;
+        random = new Random(name.charAt(0) * name.charAt(1) * name.charAt(2));
+    }
 
-  public double calculatePrice(String product) {
-    delay();
-    return format(random.nextDouble() * product.charAt(0) + product.charAt(1));
-  }
+    public String getPrice(String product) {
+        double price = calculatePrice(product);
+        Discount.Code code = Discount.Code.values()[random.nextInt(Discount.Code.values().length)];
+        return name + ":" + price + ":" + code;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public double calculatePrice(String product) {
+        delay();
+        return format(random.nextDouble() * product.charAt(0) + product.charAt(1));
+    }
 
+    public String getName() {
+        return name;
+    }
 }

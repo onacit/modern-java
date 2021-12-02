@@ -18,55 +18,57 @@ package modernjavainaction.chap10.dsl.model;
 
 public class Trade {
 
-  public enum Type {
-    BUY,
-    SELL
-  }
+    public enum Type {
+        BUY,
+        SELL
+    }
 
-  private Type type;
-  private Stock stock;
-  private int quantity;
-  private double price;
+    private Type type;
 
-  public Type getType() {
-    return type;
-  }
+    private Stock stock;
 
-  public void setType(Type type) {
-    this.type = type;
-  }
+    private int quantity;
 
-  public int getQuantity() {
-    return quantity;
-  }
+    private double price;
 
-  public void setQuantity(int quantity) {
-    this.quantity = quantity;
-  }
+    public Type getType() {
+        return type;
+    }
 
-  public double getPrice() {
-    return price;
-  }
+    public void setType(Type type) {
+        this.type = type;
+    }
 
-  public void setPrice(double price) {
-    this.price = price;
-  }
+    public int getQuantity() {
+        return quantity;
+    }
 
-  public Stock getStock() {
-    return stock;
-  }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-  public void setStock(Stock stock) {
-    this.stock = stock;
-  }
+    public double getPrice() {
+        return price;
+    }
 
-  public double getValue() {
-    return quantity * price;
-  }
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-  @Override
-  public String toString() {
-    return String.format("Trade[type=%s, stock=%s, quantity=%d, price=%.2f]", type, stock, quantity, price);
-  }
+    public Stock getStock() {
+        return stock;
+    }
 
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public double getValue() {
+        return quantity * price;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Trade[type=%s, stock=%s, quantity=%d, price=%.2f]", type, stock, quantity, price);
+    }
 }

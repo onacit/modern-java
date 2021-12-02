@@ -7,74 +7,80 @@ import java.util.concurrent.Flow.Subscriber;
 import java.util.concurrent.Flow.Subscription;
 import java.util.function.Consumer;
 
-public class SimpleCell implements Publisher<Integer>, Subscriber<Integer> {
+public class SimpleCell
+        implements Publisher<Integer>,
+                   Subscriber<Integer> {
 
-  private int value = 0;
-  private String name;
-  private List<Subscriber<? super Integer>> subscribers = new ArrayList<>();
+    private int value = 0;
 
-  public static void main(String[] args) {
-    SimpleCell c3 = new SimpleCell("C3");
-    SimpleCell c2 = new SimpleCell("C2");
-    SimpleCell c1 = new SimpleCell("C1");
+    private String name;
 
-    c1.subscribe(c3);
+    private List<Subscriber<? super Integer>> subscribers = new ArrayList<>();
 
-    c1.onNext(10); // Update value of C1 to 10
-    c2.onNext(20); // update value of C2 to 20
-  }
+    public static void main(String[] args) {
+        SimpleCell c3 = new SimpleCell("C3");
+        SimpleCell c2 = new SimpleCell("C2");
+        SimpleCell c1 = new SimpleCell("C1");
 
-  public SimpleCell(String name) {
-    this.name = name;
-  }
+        c1.subscribe(c3);
 
-  @Override
-  public void subscribe(Subscriber<? super Integer> subscriber) {
-    subscribers.add(subscriber);
-  }
+        c1.onNext(10); // Update value of C1 to 10
+        c2.onNext(20); // update value of C2 to 20
+    }
 
-  public void subscribe(Consumer<? super Integer> onNext) {
-    subscribers.add(new Subscriber<>() {
+    public SimpleCell(String name) {
+        this.name = name;
+    }
 
-      @Override
-      public void onComplete() {}
+    @Override
+    public void subscribe(Subscriber<? super Integer> subscriber) {
+        subscribers.add(subscriber);
+    }
 
-      @Override
-      public void onError(Throwable t) {
+    public void subscribe(Consumer<? super Integer> onNext) {
+        subscribers.add(new Subscriber<>() {
+
+            @Override
+            public void onComplete() {
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                t.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Integer val) {
+                onNext.accept(val);
+            }
+
+            @Override
+            public void onSubscribe(Subscription s) {
+            }
+        });
+    }
+
+    private void notifyAllSubscribers() {
+        subscribers.forEach(subscriber -> subscriber.onNext(value));
+    }
+
+    @Override
+    public void onNext(Integer newValue) {
+        value = newValue;
+        System.out.println(name + ":" + value);
+        notifyAllSubscribers();
+    }
+
+    @Override
+    public void onComplete() {
+    }
+
+    @Override
+    public void onError(Throwable t) {
         t.printStackTrace();
-      }
+    }
 
-      @Override
-      public void onNext(Integer val) {
-        onNext.accept(val);
-      }
-
-      @Override
-      public void onSubscribe(Subscription s) {}
-
-    });
-  }
-
-  private void notifyAllSubscribers() {
-    subscribers.forEach(subscriber -> subscriber.onNext(value));
-  }
-
-  @Override
-  public void onNext(Integer newValue) {
-    value = newValue;
-    System.out.println(name + ":" + value);
-    notifyAllSubscribers();
-  }
-
-  @Override
-  public void onComplete() {}
-
-  @Override
-  public void onError(Throwable t) {
-    t.printStackTrace();
-  }
-
-  @Override
-  public void onSubscribe(Subscription s) {}
-
+    @Override
+    public void onSubscribe(Subscription s) {
+    }
 }

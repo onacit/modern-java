@@ -4,15 +4,15 @@ import java.util.Optional;
 
 public class Person {
 
-  private Optional<Car> car;
-  private int age;
+    private Optional<Car> car;
 
-  public Optional<Car> getCar() {
-    return car;
-  }
+    private int age;
 
-  public int getAge() {
-    return age;
-  }
+    public Optional<Car> getCar() {
+        return car;
+    }
 
+    public int getAge() {
+        return age;
+    }
 }

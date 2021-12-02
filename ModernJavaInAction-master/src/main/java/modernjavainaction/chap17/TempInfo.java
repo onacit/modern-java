@@ -4,34 +4,34 @@ import java.util.Random;
 
 public class TempInfo {
 
-  public static final Random random = new Random();
+    public static final Random random = new Random();
 
-  private final String town;
-  private final int temp;
+    private final String town;
 
-  public TempInfo(String town, int temp) {
-    this.town = town;
-    this.temp = temp;
-  }
+    private final int temp;
 
-  public static TempInfo fetch(String town) {
-    if (random.nextInt(10) == 0) {
-      throw new RuntimeException("Error!");
+    public TempInfo(String town, int temp) {
+        this.town = town;
+        this.temp = temp;
     }
-    return new TempInfo(town, random.nextInt(100));
-  }
 
-  @Override
-  public String toString() {
-    return town + " : " + temp;
-  }
+    public static TempInfo fetch(String town) {
+        if (random.nextInt(10) == 0) {
+            throw new RuntimeException("Error!");
+        }
+        return new TempInfo(town, random.nextInt(100));
+    }
 
-  public int getTemp() {
-    return temp;
-  }
+    @Override
+    public String toString() {
+        return town + " : " + temp;
+    }
 
-  public String getTown() {
-    return town;
-  }
+    public int getTemp() {
+        return temp;
+    }
 
+    public String getTown() {
+        return town;
+    }
 }

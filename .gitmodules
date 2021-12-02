@@ -1,0 +1,8 @@
+[submodule "ModernJavaInAction-master/.idea/codeStyles"]
+	path = ModernJavaInAction-master/.idea/codeStyles
+	url = https://github.com/onacit/dot-idea-codestyles.git
+        branch = master
+[submodule "ModernJavaInAction-master/ModernJavaInAction-master/.idea/codeStyles"]
+	path = ModernJavaInAction-master/ModernJavaInAction-master/.idea/codeStyles
+	url = https://github.com/onacit/dot-idea-codestyles.git
+        branch = master
